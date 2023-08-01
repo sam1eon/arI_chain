@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from CustomLibrary.Graph_Utils import select_paths
 
+# Base URL for Google search
 base_url = "https://www.google.com/search?q="
 
 def get_similar_compounds(drug_name, top_n):
@@ -65,7 +66,8 @@ def parse_elements(url, drug_name):
 
     except Exception:
         pass
-
+        
+# Function to process similar compounds and extract information about their targets
 def process_similar_compounds(drug_name, top_n):
     print(f"Checking for similar compounds for drug: {drug_name}")
     similar_compounds = get_similar_compounds(drug_name, top_n)
@@ -101,18 +103,10 @@ def process_similar_compounds(drug_name, top_n):
     print(results)
     return results
 
-
-
 drug_name = "STYRAMATE"
-
 question = "yes?"
 
 def drug_query(string, question, progress_callback=None):
-    paths = process_similar_compounds(string, 100)
-    selected_paths, selected_nodes, unique_rels = select_paths(paths, question, len(paths), len(paths), progress_callback)
-    return selected_paths, selected_nodes, unique_rels
-
-def drug_query_new(string,question):
     paths = process_similar_compounds(string, 100)
     selected_paths, selected_nodes, unique_rels = select_paths(paths, question, len(paths), len(paths), progress_callback)
     return selected_paths, selected_nodes, unique_rels
